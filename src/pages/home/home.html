@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-slides pager>
+    <ion-slide class="snail-background">
+      <h1>Welcome</h1>
+      <img src="./assets/images/oc-main.png" />
+      <p>{{ slide1Msg }}</p>
+      <button ion-button outline>View Menu</button>
+      <button ion-button outline color="secondary">Call Us</button>
+    </ion-slide>
+    <ion-slide>
+      <h2>Owner</h2>
+      <ion-card>
+        <img src="assets/images/oc-main.png" />
+        <ion-card-content>
+          <ion-card-title>
+            Nguyen Thi Hang
+          </ion-card-title>
+          <p>
+            The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
+          </p>
+        </ion-card-content>
+         <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-left>
+          <ion-icon name='call'></ion-icon>
+          Call
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small color="danger" icon-left>
+          <ion-icon name='message'></ion-icon>
+          Text
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" icon-left>
+          <ion-icon name='mail'></ion-icon>
+          Email
+        </button>
+      </ion-col>
+    </ion-row>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
+</ion-content>
