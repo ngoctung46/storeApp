@@ -7,7 +7,15 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Menu</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goToCartPage()">
+        <ion-icon name='cart'></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -25,11 +33,13 @@
   <div [ngSwitch]="selectedCategory">
     <ng-container *ngFor="let category of categories">
       <ion-list *ngSwitchCase="category.title">
-        <ion-item *ngFor="let product of category.products">
+        <ion-item *ngFor="let product of category.products" >
           <ion-thumbnail item-left>
             <img src="assets/images/{{ product.imgUrl }}">
           </ion-thumbnail>
           <h2>{{ product.title }}</h2>
+          <p class="assertive">{{  product.price }}</p>
+          <button ion-button clear item-right (click)="presentProduct($event, product)">View</button>
         </ion-item>
       </ion-list>
     </ng-container>

@@ -3,6 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ContactPage } from '../pages/contact-page/contact-page';
+import { CartPage } from '../pages/cart-page/cart-page';
 
 import { HomePage } from '../pages/home/home';
 import { MenuPage } from '../pages/menu/menu';
@@ -27,6 +28,7 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Menu', component: CategoryPage },
       { title: 'Contact', component: ContactPage },
+      { title: 'Cart', component: CartPage }
     
     ];
 

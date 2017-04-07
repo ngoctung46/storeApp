@@ -1,0 +1,32 @@
+<!--
+  Generated template for the CartPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>CartPage</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<div *ngIf="orderLines.length > 0">
+  <p> There is {{ orderLines.length }} items in this cart:</p>
+  <p *ngFor="let orderline of orderLines" text-right>
+    {{ orderline.name }} ({{ orderline.modifier }}) {{ orderline.price }} x {{ orderline.quantity }} = {{ orderline.price * orderline.quantity }}
+  </p>
+  <hr/>
+<h2 text-right class='secondary'>Total: {{ getTotal() }}</h2>
+</div>
+<div *ngIf="orderLines.length <= 0"> <p>There is no item in cart</p>
+  <button ion-button end outline>Add Item</button>
+</div>
+<button ion-button block (click) = "gotoCheckout()">Continue</button>
+</ion-content>
