@@ -5,30 +5,39 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MenuPage } from '../pages/menu/menu';
-import { CategoryPage, PopoverPage } from '../pages/category/category';
-import { CartPage } from '../pages/cart-page/cart-page';
-import { CheckoutPage } from '../pages/checkout-page/checkout-page';
-import { CompletePage } from '../pages/complete-page/complete-page';
-import { ContactPage } from '../pages/contact-page/contact-page';
-
+import { CategoryModule } from '../pages/category/category.module';
+import { CartPageModule } from '../pages/cart-page/cart-page.module';
+import { CheckoutPageModule } from '../pages/checkout-page/checkout-page.module';
+import { CompletePageModule } from '../pages/complete-page/complete-page.module';
+import { ContactPageModule } from '../pages/contact-page/contact-page.module';
+import { AngularFireModule } from 'angularfire2';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+export const config = {
+  apiKey: "AIzaSyBhyx9qtOO7VYKaUbGUW32L9pwamQqL6Aw",
+  authDomain: "fire-base-demo-13f1d.firebaseapp.com",
+  databaseURL: "https://fire-base-demo-13f1d.firebaseio.com",
+  projectId: "fire-base-demo-13f1d",
+  storageBucket: "fire-base-demo-13f1d.appspot.com",
+  messagingSenderId: "292281296546"
+}
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    MenuPage,
-    CategoryPage,
-    PopoverPage,
-    CartPage,
-    CheckoutPage,
-    CompletePage,
-    ContactPage
-
+    MenuPage
+      
+   
   ],
   imports: [
     BrowserModule,
+    CartPageModule,
+    CheckoutPageModule,
+    CompletePageModule,
+    ContactPageModule,
+    CategoryModule,
+    AngularFireModule.initializeApp(config),
     IonicModule.forRoot(MyApp)
 
   ],
@@ -36,14 +45,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     HomePage,
-    MenuPage,
-    CategoryPage,
-    PopoverPage,
-    CartPage,
-    CheckoutPage,
-    CompletePage,
-    ContactPage
-
+    MenuPage
+    
   ],
   providers: [
     StatusBar,

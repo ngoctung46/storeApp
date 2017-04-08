@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ViewController, PopoverController, ToastController } from 'ionic-angular';
 import { Cart } from '../cart-page/cart';
 import { CartPage } from '../cart-page/cart-page';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 /**
  * Generated class for the Category page.
@@ -22,7 +23,7 @@ export class CategoryPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public popoverCtr: PopoverController,
-
+    public af: AngularFire
   ) {
     this.categories.push(
       {
@@ -148,7 +149,7 @@ export class CategoryPage {
         <ion-item>
             <ion-label>Modifier</ion-label>
             <ion-select [(ngModel)]= "selectedModifier">
-              <ion-option *ngFor="let modifier of modifiers" [value]="modifier">{{ modifier }}</ion-option>
+              <ion-option *ngFor="let modifier of modifiers | async" [value]="modifier">{{ modifier.name }}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item style="font-size: 14px;">        
@@ -165,21 +166,22 @@ export class CategoryPage {
 })
 export class PopoverPage {
   product: any;
-  modifiers: string[] = [
-    'Garlic',
-    'Grill',
-    'Fry',
-    'Boil'
-  ];
-  selectedModifier: string;
-  constructor(public viewCtrl: ViewController, public navParms: NavParams, public toastCtrl: ToastController) {
+  modifiers: FirebaseListObservable<any>;
+   
+  selectedModifier: any;
+  constructor(
+    public viewCtrl: ViewController, 
+    public navParms: NavParams, 
+    public toastCtrl: ToastController,
+    public af: AngularFire) {
     this.product = this.navParms.data.product;
+    this.modifiers = af.database.list('/modifiers');
     this.selectedModifier = this.modifiers[0];
   }
   addToCart() {
      let isAdd = true;
      Cart.getOrderLines().forEach(ol => {
-        if (ol.$id === this.product.$id && ol.modifier === this.selectedModifier) {
+        if (ol.$id === this.product.$id && ol.modifier === this.selectedModifier.name) {
           ol.quantity += 1;      
           isAdd = false;
         }  
@@ -189,14 +191,14 @@ export class PopoverPage {
         $id: this.product.$id,
         name: this.product.title,
         quantity: 1,
-        modifier: this.selectedModifier,
+        modifier: this.selectedModifier.name,
         price: this.product.price
       });   
       console.log(Cart.getOrderLines()[0].name);  
     }   
   
     let toast = this.toastCtrl.create({
-      message: this.product.title + " " + this.selectedModifier + " was added successfully",
+      message: this.product.title + " " + this.selectedModifier.name + " was added successfully",
       duration: 3000,
       position: 'bottom' 
     });
