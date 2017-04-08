@@ -4,6 +4,7 @@ import { ViewController, PopoverController, ToastController } from 'ionic-angula
 import { Cart } from '../cart-page/cart';
 import { CartPage } from '../cart-page/cart-page';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 /**
  * Generated class for the Category page.
@@ -23,8 +24,7 @@ export class CategoryPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public popoverCtr: PopoverController,
-    public af: AngularFire
-  ) {
+    public af: AngularFire) {
     this.categories.push(
       {
         $id: "1",
@@ -162,7 +162,8 @@ export class CategoryPage {
     </ion-card-content>
   </ion-card>
 
-`
+`,
+providers: [LocalNotifications]
 })
 export class PopoverPage {
   product: any;
@@ -173,9 +174,18 @@ export class PopoverPage {
     public viewCtrl: ViewController, 
     public navParms: NavParams, 
     public toastCtrl: ToastController,
-    public af: AngularFire) {
+    public af: AngularFire,
+    public localNotifications: LocalNotifications) {
     this.product = this.navParms.data.product;
     this.modifiers = af.database.list('/modifiers');
+    this.modifiers.subscribe((x) => {
+      this.localNotifications.schedule({
+        id: 1,
+        title: "New modifier has been placed",
+        text: "New Order Has been placed"         
+      });
+      console.log('Notification has been scheduled');
+    });
     this.selectedModifier = this.modifiers[0];
   }
   addToCart() {
