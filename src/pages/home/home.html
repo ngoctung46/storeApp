@@ -14,7 +14,7 @@
       <img src="./assets/images/oc-main.png" />
       <p>{{ slide1Msg }}</p>
       <button ion-button (click)="gotoMenu()">Xem Menu</button>
-      <button ion-button color="secondary">Gọi</button>
+      <button ion-button color="secondary" (click)="call()">Gọi</button>
     </ion-slide>
     <ion-slide>
       <h2>Chủ Quán</h2>
@@ -32,24 +32,19 @@
           </p>
         </ion-card-content>
          <ion-row no-padding>
-      <ion-col>
-        <button ion-button clear small color="danger" icon-left>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" icon-left (click)="call()" >
           <ion-icon name='call'></ion-icon>
           Gọi 
         </button>
       </ion-col>
       <ion-col text-center>
-        <button ion-button clear small color="danger" icon-left>
+        <button ion-button clear small color="danger" icon-left (click)="send_sms()">
           <ion-icon name='text'></ion-icon>
           Nhắn
         </button>
       </ion-col>
-      <ion-col text-right>
-        <button ion-button clear small color="danger" icon-left>
-          <ion-icon name='mail'></ion-icon>
-          Email
-        </button>
-      </ion-col>
+      
     </ion-row>
       </ion-card>
     </ion-slide>

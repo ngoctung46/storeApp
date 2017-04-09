@@ -13,6 +13,8 @@ import { ContactPageModule } from '../pages/contact-page/contact-page.module';
 import { AngularFireModule } from 'angularfire2';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { SMS } from '@ionic-native/sms';
+import { CallNumber } from '@ionic-native/call-number';
 
 export const config = {
   apiKey: "AIzaSyBhyx9qtOO7VYKaUbGUW32L9pwamQqL6Aw",
@@ -50,6 +52,8 @@ export const config = {
   ],
   providers: [
     StatusBar,
+    SMS,
+    CallNumber,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
