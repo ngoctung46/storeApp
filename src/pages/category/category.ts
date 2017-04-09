@@ -110,7 +110,7 @@ export class PopoverPage {
     if (typeof this.selectedModifier == 'undefined') {
       if (this.product.category != "Nước Ngọt") {
         let toast = this.toastCtrl.create({
-          message: "Please choose the product's modifier",
+          message: "Làm ơn chọn cách chế biến",
           duration: 3000,
           position: 'bottom'
         });
@@ -139,7 +139,7 @@ export class PopoverPage {
     }
 
     let toast = this.toastCtrl.create({
-      message: this.product.name + " " + this.selectedModifier.name + " was added successfully",
+      message: this.product.name + " " + this.selectedModifier.name + " đã được thêm vào giỏ hàng",
       duration: 3000,
       position: 'bottom'
     });
