@@ -4,8 +4,6 @@ import { ViewController, PopoverController, ToastController } from 'ionic-angula
 import { Cart } from '../cart-page/cart';
 import { CartPage } from '../cart-page/cart-page';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { LocalNotifications } from '@ionic-native/local-notifications';
-
 /**
  * Generated class for the Category page.
  *
@@ -18,108 +16,28 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
   templateUrl: 'category.html',
 })
 export class CategoryPage {
-  categories: any[] = [];
-  selectedCategory: string;
+  filterCategories: any = [];
+  filterProducts: any = [];
+  selectedCategory: string = '';
+  products: FirebaseListObservable<any>;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public popoverCtr: PopoverController,
     public af: AngularFire) {
-    this.categories.push(
-      {
-        $id: "1",
-        title: "Snails",
-        products: [
-          {
-            $id: "1",
-            title: "Fatty Snails",
-            description: " Very good",
-            price: 20000,
-            imgUrl: 'oc-main.png',
-
-          },
-          {
-            $id: "2",
-            title: "Big Snails",
-            description: " Very bad",
-            price: 20000,
-            imgUrl: 'oc-main.png'
-
-          }
-        ]
-      },
-      {
-        $id: "2",
-        title: "Shells",
-        products: [
-          {
-            $id: "3",
-            title: "Fatty Shells",
-            description: " Very good",
-            price: 20000,
-            imgUrl: 'oc-main.png'
-
-
-          },
-          {
-            $id: "4",
-            title: "Big Shells",
-            description: " Very bad",
-            price: 20000,
-            imgUrl: 'oc-main.png'
-          }
-        ]
-      },
-      {
-        $id: "3",
-        title: "Beverages",
-        products: [
-          {
-            $id: "5",
-            title: "Fatty Beverages",
-            description: " Very good",
-            price: 20000,
-            imgUrl: 'oc-main.png'
-
-          },
-          {
-            $id: "6",
-            title: "Big Beverages",
-            description: " Very bad",
-            price: 20000,
-            imgUrl: 'oc-main.png'
-
-          }
-        ]
-      },
-      {
-        $id: "3",
-        title: "Others",
-        products: [
-          {
-            $id: "7",
-            title: "Fatty Others",
-            description: " Very good",
-            price: 20000,
-            imgUrl: 'oc-main.png'
-
-          },
-          {
-            $id: "8",
-            title: "Big Others",
-            description: " Very bad",
-            price: 20000,
-            imgUrl: 'oc-main.png'
-
-          }
-        ]
-      }
-
-    );
-    this.selectedCategory = this.categories[0].title;
+    this.products = af.database.list('/products');
+    this.products.subscribe((x: any[]) => {
+      x.forEach(e => {
+        this.filterCategories.push(e.category);
+      })
+      this.filterCategories = this.filterCategories.filter(function (item, pos, self) {
+        return pos == self.indexOf(item);
+      });
+    });
   }
 
   ionViewDidLoad() {
+    this.setSelectedProducts('Ốc');
     console.log('ionViewDidLoad Category');
   }
 
@@ -128,92 +46,107 @@ export class CategoryPage {
     productPopover.present();
   }
 
-  goToCartPage(){
+  goToCartPage() {
     this.navCtrl.push(CartPage);
   }
 
+
+  setSelectedProducts(category) {
+    this.products.subscribe((x: any[]) => {
+      this.filterProducts = x.filter(e => e.category === category);
+    });
+  }
 
 }
 @Component({
   template: `
   <ion-card>
-    <img src="assets/images/{{ product.imgUrl}}" />
+    <img src="assets/images/{{ product.url}}" />
     <ion-card-content>
         <ion-card-title text-center>
-            {{ product.title }}
+            {{ product.name }}
         </ion-card-title>
      
         <p align="center">
             {{ product.description }}
         </p>
-        <ion-item>
-            <ion-label>Modifier</ion-label>
+        <ion-item *ngIf="product.category != 'Nước Ngọt'">
+            <ion-label>Cách Chế Biến</ion-label>
             <ion-select [(ngModel)]= "selectedModifier">
               <ion-option *ngFor="let modifier of modifiers | async" [value]="modifier">{{ modifier.name }}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item style="font-size: 14px;">        
-           Price:
-          <ion-badge item-right color="assertive">$ {{ product.price }}</ion-badge>
+           Giá:
+          <ion-badge item-right color="assertive">{{ product.price | number }}đ</ion-badge>
         </ion-item>
         <ion-item item-right>
-        <button ion-button full color='secondary' (click)=addToCart()>Add To Cart</button>
+        <button ion-button full color='secondary' (click)=addToCart()>Đặt Món Này</button>
         </ion-item>
     </ion-card-content>
   </ion-card>
 
-`,
-providers: [LocalNotifications]
+`
+
 })
 export class PopoverPage {
   product: any;
   modifiers: FirebaseListObservable<any>;
-   
+
   selectedModifier: any;
   constructor(
-    public viewCtrl: ViewController, 
-    public navParms: NavParams, 
+    public viewCtrl: ViewController,
+    public navParms: NavParams,
     public toastCtrl: ToastController,
-    public af: AngularFire,
-    public localNotifications: LocalNotifications) {
+    public af: AngularFire) {
     this.product = this.navParms.data.product;
     this.modifiers = af.database.list('/modifiers');
-    this.modifiers.subscribe((x) => {
-      this.localNotifications.schedule({
-        id: 1,
-        title: "New modifier has been placed",
-        text: "New Order Has been placed"         
-      });
-      console.log('Notification has been scheduled');
-    });
-    this.selectedModifier = this.modifiers[0];
+  }
+  ionViewDidLoad() {
+
   }
   addToCart() {
-     let isAdd = true;
-     Cart.getOrderLines().forEach(ol => {
-        if (ol.$id === this.product.$id && ol.modifier === this.selectedModifier.name) {
-          ol.quantity += 1;      
-          isAdd = false;
-        }  
-      });
-    if(isAdd){
-       Cart.addOrderLine({
-        $id: this.product.$id,
-        name: this.product.title,
+    let isAdd = true;
+    if (typeof this.selectedModifier == 'undefined') {
+      if (this.product.category != "Nước Ngọt") {
+        let toast = this.toastCtrl.create({
+          message: "Please choose the product's modifier",
+          duration: 3000,
+          position: 'bottom'
+        });
+         toast.present();
+         return;
+      }     
+      else{
+        this.selectedModifier = {name:'Ướp Lạnh/ Đá'};
+      }
+    }
+    Cart.getOrderLines().forEach(ol => {
+      if (ol.name === this.product.name && ol.modifier === this.selectedModifier.name) {
+        ol.quantity += 1;
+        isAdd = false;
+      }
+
+    });
+    if (isAdd) {
+      Cart.addOrderLine({
+        name: this.product.name,
         quantity: 1,
         modifier: this.selectedModifier.name,
         price: this.product.price
-      });   
-      console.log(Cart.getOrderLines()[0].name);  
-    }   
-  
+      });
+      console.log(Cart.getOrderLines()[0].name);
+    }
+
     let toast = this.toastCtrl.create({
-      message: this.product.title + " " + this.selectedModifier.name + " was added successfully",
+      message: this.product.name + " " + this.selectedModifier.name + " was added successfully",
       duration: 3000,
-      position: 'bottom' 
+      position: 'bottom'
     });
     toast.present();
     this.viewCtrl.dismiss();
   }
+
+
 }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Cart } from './cart';
 import { CheckoutPage } from '../checkout-page/checkout-page';
+import { CategoryPage } from'../category/category';
 
 /**
  * Generated class for the CartPage page.
@@ -33,4 +34,7 @@ export class CartPage {
     this.navCtrl.push(CheckoutPage,{ orderLines: this.orderLines });
   }
 
+  gotoCategory(){
+    this.navCtrl.push(CategoryPage);
+  }
 }

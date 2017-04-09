@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Menu</ion-title>
+    <ion-title>Menu - Thực Đơn</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="goToCartPage()">
         <ion-icon name='cart'></ion-icon>
@@ -22,27 +22,23 @@
 
 
 <ion-content padding>
-
   <div padding>
     <ion-segment [(ngModel)]="selectedCategory">
-      <ion-segment-button *ngFor="let category of categories" [value]="category.title">
-        {{ category.title }}
+      <ion-segment-button *ngFor="let category of filterCategories" [value]="category" (click)="setSelectedProducts(category)">
+        {{ category }}
       </ion-segment-button>
     </ion-segment>
   </div>
-  <div [ngSwitch]="selectedCategory">
-    <ng-container *ngFor="let category of categories">
-      <ion-list *ngSwitchCase="category.title">
-        <ion-item *ngFor="let product of category.products" >
-          <ion-thumbnail item-left>
-            <img src="assets/images/{{ product.imgUrl }}">
-          </ion-thumbnail>
-          <h2>{{ product.title }}</h2>
-          <p class="assertive">{{  product.price }}</p>
-          <button ion-button clear item-right (click)="presentProduct($event, product)">View</button>
-        </ion-item>
-      </ion-list>
-    </ng-container>
+  <div>
+    <ion-list>
+      <ion-item *ngFor="let product of filterProducts">
+        <ion-thumbnail item-left>
+          <img src="assets/images/{{ product.url }}">
+        </ion-thumbnail>
+        <h2>{{ product.name }}</h2>
+        <p color="danger">{{ product.price | number }}đ</p>
+        <button ion-button clear item-right (click)="presentProduct($event, product)">Xem</button>
+      </ion-item>
+    </ion-list>
   </div>
-
 </ion-content>

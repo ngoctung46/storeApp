@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { CategoryPage } from '../category/category';
 
 @Component({
   selector: 'page-home',
@@ -11,10 +12,14 @@ export class HomePage {
   slide3Msg: string;
   constructor(public navCtrl: NavController) {
     this.slide1Msg = `
-      Welcome to Hang snail restaurant. You have made a right choice
-      We have a variety of snails with secret recepies and ingredient
-      to your appetide.  
+     Chào mừng đến với Ốc Hằng online. Bạn sẽ hài lòng với chất lượng và 
+     cung cách phục vụ của chúng tôi. Với thực đơn đa dạng, giá cả hợp lý.
+     Nhận giao hàng miễn phí trong quận Bình Tân. 
+     Liên Hệ: 01657115741 ( Hằng )    
     `;
+  }
+  gotoMenu(){
+    this.navCtrl.push(CategoryPage);
   }
 
 }

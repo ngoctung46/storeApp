@@ -7,38 +7,41 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="main-background">
   <ion-slides pager>
     <ion-slide>
-      <h1>Welcome</h1>
+      <h1>Chào Mừng Bạn Đến Với Ốc Hằng</h1>
       <img src="./assets/images/oc-main.png" />
       <p>{{ slide1Msg }}</p>
-      <button ion-button outline>View Menu</button>
-      <button ion-button outline color="secondary">Call Us</button>
+      <button ion-button (click)="gotoMenu()">Xem Menu</button>
+      <button ion-button color="secondary">Gọi</button>
     </ion-slide>
     <ion-slide>
-      <h2>Owner</h2>
+      <h2>Chủ Quán</h2>
       <ion-card>
-        <img src="assets/images/oc-main.png" />
+        <img src="assets/images/hang.png" text-center/>
         <ion-card-content>
           <ion-card-title>
-            Nguyen Thi Hang
+            Nguyễn Thị Hằng
           </ion-card-title>
           <p>
-            The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
+            @Hằng: Tôi cam kết sẽ mang đến cho các bạn những món ốc tươi ngon
+          </p>
+          <p>
+            Giá cả hợp lý và đảm bảo hợp vệ sinh. Cám ơn các bạn đã ủng hộ chúng tôi
           </p>
         </ion-card-content>
          <ion-row no-padding>
       <ion-col>
         <button ion-button clear small color="danger" icon-left>
           <ion-icon name='call'></ion-icon>
-          Call
+          Gọi 
         </button>
       </ion-col>
       <ion-col text-center>
         <button ion-button clear small color="danger" icon-left>
           <ion-icon name='text'></ion-icon>
-          Text
+          Nhắn
         </button>
       </ion-col>
       <ion-col text-right>

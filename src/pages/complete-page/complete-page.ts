@@ -20,5 +20,7 @@ export class CompletePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CompletePage');
   }
-
+  goHome(){
+    this.navCtrl.popToRoot();
+  }
 }

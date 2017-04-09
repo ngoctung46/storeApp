@@ -7,34 +7,36 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>CheckoutPage</ion-title>
+    <ion-title>Thông Tin</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
+  <p *ngIf="submitAttempt" sytle="color: #ea6153;">Làm ơn điền chính xác thông tin để tiếp tục:</p>
+  <ion-list no-lines>
+    <form [formGroup]="shippingForm">
     <ion-item>
-      <ion-label floating>Full Name</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-label floating>Tên Họ Đầy Đủ</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Address</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-label floating>Địa Chỉ</ion-label>
+      <ion-input type="text" formControlName ="address"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Phone</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-label floating>Số Điện Thoại Liên Hệ</ion-label>
+      <ion-input type="text" formControlName="phone"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Email</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" formControlName="email"></ion-input>
     </ion-item>
-
-    <button ion-button block (click)="gotoComplete()">Submit</button>
+    </form>   
   </ion-list>
+  <button ion-button block (click)="gotoComplete()">Gửi Đơn Hàng</button>
 </ion-content>
