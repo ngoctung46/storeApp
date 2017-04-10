@@ -4,6 +4,7 @@ import { ViewController, PopoverController, ToastController } from 'ionic-angula
 import { Cart } from '../cart-page/cart';
 import { CartPage } from '../cart-page/cart-page';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import 'rxjs/add/operator/toPromise';
 /**
  * Generated class for the Category page.
  *
@@ -18,26 +19,30 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 export class CategoryPage {
   filterCategories: any = [];
   filterProducts: any = [];
-  selectedCategory: string = '';
+  selectedCategory: string = 'Ốc';
+  selectedProducts: any[];
   products: FirebaseListObservable<any>;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public popoverCtr: PopoverController,
     public af: AngularFire) {
-    this.products = af.database.list('/products');
+    this.products = this.af.database.list('/products');    
     this.products.subscribe((x: any[]) => {
       x.forEach(e => {
         this.filterCategories.push(e.category);
-      })
+      });
       this.filterCategories = this.filterCategories.filter(function (item, pos, self) {
         return pos == self.indexOf(item);
       });
     });
+    this.setSelectedProducts('Ốc');
   }
 
-  ionViewDidLoad() {
-    this.setSelectedProducts('Ốc');
+  ionViewEnter(){
+    
+  }
+  ionViewDidLoad() {    
     console.log('ionViewDidLoad Category');
   }
 
@@ -51,15 +56,16 @@ export class CategoryPage {
   }
 
 
-  setSelectedProducts(category) {
+  setSelectedProducts(category){
+    console.log("Selected Category: " + this.selectedCategory);
     this.products.subscribe((x: any[]) => {
       this.filterProducts = x.filter(e => e.category === category);
     });
-  }
-
+  }  
 }
 @Component({
   template: `
+  <ion-content>
   <ion-card>
     <img src="assets/images/{{ product.url}}" />
     <ion-card-content>
@@ -85,7 +91,7 @@ export class CategoryPage {
         </ion-item>
     </ion-card-content>
   </ion-card>
-
+<ion-content>
 `
 
 })

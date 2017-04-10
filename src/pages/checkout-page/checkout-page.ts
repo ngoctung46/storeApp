@@ -15,6 +15,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
   templateUrl: 'checkout-page.html',
 })
 export class CheckoutPage {
+  delivery: any;
   submitAttempt: boolean = false;
   shippingForm: FormGroup;
   orderLines: any;
@@ -24,8 +25,10 @@ export class CheckoutPage {
       name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       address: ['', Validators.required],
       phone: ['', Validators.required],
-      email: ['', Validators.email]
+      email: ['', Validators.email],
+      deliveryDate:['',Validators.required]
     });
+    this.delivery = new Date();
     this.orderLines = this.navParams.data.orderLines;
     this.orders = af.database.list('/orders');
   }
@@ -47,7 +50,8 @@ export class CheckoutPage {
         name: this.shippingForm.value.name,
         address: this.shippingForm.value.address,
         email: this.shippingForm.value.email,
-        phone: this.shippingForm.value.phone
+        phone: this.shippingForm.value.phone,
+        deliveryDate: this.shippingForm.value.deliveryDate
       });
     }
     this.navCtrl.push(CompletePage);

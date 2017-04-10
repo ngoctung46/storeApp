@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Cart } from './cart';
 import { CheckoutPage } from '../checkout-page/checkout-page';
-import { CategoryPage } from'../category/category';
+import { CategoryPage } from '../category/category';
 
 /**
  * Generated class for the CartPage page.
@@ -16,7 +16,7 @@ import { CategoryPage } from'../category/category';
   templateUrl: 'cart-page.html',
 })
 export class CartPage {
-  orderLines:any[];  
+  orderLines: any[];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.orderLines = Cart.getOrderLines();
   }
@@ -24,17 +24,24 @@ export class CartPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CartPage');
   }
-  getTotal(){
+  getTotal() {
     let total: number = 0;
     this.orderLines.forEach(ol => total += ol.price * ol.quantity);
     return total;
   }
 
-  gotoCheckout(){
-    this.navCtrl.push(CheckoutPage,{ orderLines: this.orderLines });
+  gotoCheckout() {
+    this.navCtrl.push(CheckoutPage, { orderLines: this.orderLines });
   }
 
-  gotoCategory(){
+  gotoCategory() {
     this.navCtrl.push(CategoryPage);
+  }
+  removeOrderLine(orderLine) {
+  
+    var index = this.orderLines.indexOf(orderLine, 0);
+    if (index > -1) {
+      this.orderLines.splice(index, 1);
+    }
   }
 }

@@ -17,16 +17,24 @@
 
 
 <ion-content padding>
-<div *ngIf="orderLines.length > 0">
-  <p>Bạn có {{ orderLines.length }} orders trong giỏ hàng:</p>
-  <p *ngFor="let orderline of orderLines" text-right>
-    {{ orderline.name }} ({{ orderline.modifier }}) {{ orderline.price | number }}đ x {{ orderline.quantity }} = {{ orderline.price * orderline.quantity | number }}đ
-  </p>
-  <hr/>
-<p text-right class='secondary'><b>Tổng Cộng: {{ getTotal() | number }}đ</b></p>
-</div>
-<div *ngIf="orderLines.length <= 0"> <p>Không có order trong giỏ hàng</p>
-  <button ion-button end outline (click)=gotoCategory()>Thêm Order</button>
-</div>
-<button ion-button block (click) = "gotoCheckout()">Tiếp Tục</button>
+  <div *ngIf="orderLines.length > 0">
+    <p>Bạn có {{ orderLines.length }} orders trong giỏ hàng:</p>
+    <ion-list>
+      <ion-item *ngFor="let orderline of orderLines" text-right>
+        <ion-icon (click)="removeOrderLine(orderline)" name="close" color='danger' item-left></ion-icon>
+        <h3>{{ orderline.name }} ({{ orderline.modifier }}) </h3>
+        <p>{{ orderline.price | number }}đ x {{ orderline.quantity }} = {{ orderline.price
+        * orderline.quantity | number }}đ<p>
+       
+      </ion-item>
+    </ion-list>
+    <hr/>
+    <p text-right class='secondary'><b>Tổng Cộng: {{ getTotal() | number }}đ</b></p>
+    <button ion-button block (click)="gotoCheckout()">Tiếp Tục</button>
+  </div>
+  <div *ngIf="orderLines.length <= 0">
+    <p>Không có order trong giỏ hàng</p>
+    <button ion-button end outline (click)=gotoCategory()>Thêm Order</button>
+  </div>
+
 </ion-content>

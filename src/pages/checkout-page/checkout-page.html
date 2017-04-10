@@ -15,28 +15,39 @@
 
 <ion-content padding>
   <p *ngIf="submitAttempt" sytle="color: #ea6153;">Làm ơn điền chính xác thông tin để tiếp tục:</p>
-  <ion-list no-lines>
+  <ion-list>
     <form [formGroup]="shippingForm">
-    <ion-item>
-      <ion-label floating>Tên Họ Đầy Đủ</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Tên Họ Đầy Đủ</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Địa Chỉ</ion-label>
-      <ion-input type="text" formControlName ="address"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Địa Chỉ</ion-label>
+        <ion-input type="text" formControlName="address"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Số Điện Thoại Liên Hệ</ion-label>
-      <ion-input type="text" formControlName="phone"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Số Điện Thoại Liên Hệ</ion-label>
+        <ion-input type="text" formControlName="phone"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Email</ion-label>
-      <ion-input type="text" formControlName="email"></ion-input>
-    </ion-item>
-    </form>   
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Ngày giao</ion-label>
+        <ion-datetime displayFormat="DD MM, YYYY HH:mm" 
+          pickerFormat="DD MM, YYYY HH:mm"
+          [ngModel]="delivery"
+          min="2017"
+          max="2018"
+          cancelText="Huỷ"
+          doneText="Xác Nhận"
+           formControlName="deliveryDate"></ion-datetime>
+      </ion-item>
+    </form>
   </ion-list>
   <button ion-button block (click)="gotoComplete()">Gửi Đơn Hàng</button>
 </ion-content>

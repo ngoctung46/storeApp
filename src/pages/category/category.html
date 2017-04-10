@@ -19,18 +19,17 @@
   </ion-navbar>
 
 </ion-header>
-
-
-<ion-content padding>
-  <div padding>
-    <ion-segment [(ngModel)]="selectedCategory">
-      <ion-segment-button *ngFor="let category of filterCategories" [value]="category" (click)="setSelectedProducts(category)">
+<ion-content>
+  <ion-segment *ngIf="filterCategories.length > 0" [(ngModel)]="selectedCategory" padding>
+      <ng-container *ngFor="let category of filterCategories">
+      <ion-segment-button [value]="category" (click)="setSelectedProducts(selectedCategory)">
         {{ category }}
       </ion-segment-button>
+      </ng-container>
     </ion-segment>
-  </div>
-  <div>
-    <ion-list>
+  <div padding [ngSwitch]="selectedCategory">
+    <ng-container *ngFor="let category of filterCategories">
+    <ion-list *ngSwitchCase="category">
       <ion-item *ngFor="let product of filterProducts">
         <ion-thumbnail item-left>
           <img src="assets/images/{{ product.url }}">
@@ -40,5 +39,7 @@
         <button ion-button clear item-right (click)="presentProduct($event, product)">Xem</button>
       </ion-item>
     </ion-list>
+    </ng-container>
   </div>
 </ion-content>
+
